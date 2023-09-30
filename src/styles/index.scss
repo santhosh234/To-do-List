@@ -1,0 +1,69 @@
+$color1: Snow;
+$color2: White;
+$color3: rgb(238, 251, 255);
+$color4: black;
+$color5: lightblue;
+
+body {
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: $color1;
+}
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    background-color: $color1;
+    padding: 0px;
+    border: {
+        style: solid;
+        width: 1px;
+        color: $color4;
+    }
+    box-shadow: 10px 10px $color5;
+}
+
+.input {
+    border: none;
+    width: 100%;
+}
+
+li {
+    display: flex;
+    list-style: none;
+    padding: 5px;
+    margin: none;
+    background-color: $color2;
+}
+
+li:nth-child(2n) {
+	background-color: $color3;
+}
+
+li:hover .hide {
+    display: block;
+}
+
+span {
+    float: right; 
+    border: none;
+    margin-right: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+.checkbox {
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+label {
+    margin-left: 5px;
+}
