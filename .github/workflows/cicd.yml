@@ -24,3 +24,6 @@ jobs:
       run: docker build -t cicd-pipeline .
     - name: Push to dockerhub
       run: docker push santhoshh27/cicd-pipeline:latest
+    - name: List Docker Images
+      run: docker images
+
