@@ -3,7 +3,7 @@ name: Docker CI
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -14,10 +14,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker
-        uses: actions/setup-docker@v2
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t my-todo-app .
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false  # Set to true if you want to push the image to a container registry
 
-      - name: Run Docker container
-        run: docker run my-todo-app npm run start
+      # Add more steps as needed for your workflow
