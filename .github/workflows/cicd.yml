@@ -29,19 +29,14 @@ jobs:
 
   deploy:
     needs: build 
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy to EC2
-        env:
-          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          HOST_NAME: ${{ secrets.HOST_DNS }}
-          USER_NAME: ${{ secrets.USER_NAME }}
-          TARGET_DIR: ${{ secrets.TARGET_DIR }}
-
-        run: |
-          ssh -i "D:\mykey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-52-201-226-41.compute-1.amazonaws.com
-         
+      - name: pull image from docker hub
+        run: docker pull santhoshh27/cicd-pipeline:latest
+      - name: Delete old container
+        run: docker rm -f cicd-pipeline-container
+      - name: Run docker container
+        run: docker run -d -p 5000:5000 -name cicd-pipeline-container santhoshh27/cicd-pipeline:latest
+          
+        
