@@ -43,5 +43,5 @@ jobs:
           TARGET_DIR: ${{ secrets.TARGET_DIR }}
 
         run: |
-          ssh -i "$PRIVATE_KEY" "$USER_NAME@$HOST_NAME"
+          ssh -i "$EC2_SSH_KEY" "$USER_NAME@$HOST_NAME"
          
