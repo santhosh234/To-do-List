@@ -37,6 +37,6 @@ jobs:
       - name: Delete old container
         run: docker rm -f cicd-pipeline-container
       - name: Run docker container
-        run: docker run -d -p 5000:5000 -name cicd-pipeline-container santhoshh27/cicd-pipeline:latest
+        run: docker run -d -p 3000:3000 --name cicd-pipeline-container santhoshh27/cicd-pipeline:latest
           
         
