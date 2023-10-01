@@ -9,7 +9,7 @@ import "../styles/index.scss";
 
 
 //import your own components
-import Home from "./component/home.jsx";
+import Home from "./component/home.jsx";  //import
 
 
 
