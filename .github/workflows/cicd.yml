@@ -1,8 +1,9 @@
-name: Docker Image CI
+name: Docker Image CI/CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
 
@@ -11,31 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Login Dockerhub
-      env:
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    
-    - name: Build the Docker image
-      run: docker build -t santhoshh27/cicd-pipeline:latest .
-    - name: Push to dockerhub
-      run: docker push santhoshh27/cicd-pipeline:latest
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  Deploy:
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: docker build -t santhoshh27/cicd-pipeline:latest .
+      
+      - name: Push to Docker Hub
+        run: docker push santhoshh27/cicd-pipeline:latest
+
+  deploy:
     needs: build 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy in EC2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
           HOST_NAME: ${{ secrets.HOST_DNS }}
-          USER_NAME: ${{secrets.USER_NAME}}
-          TARGET_DIR: ${{secrets.TARGET_DIR}}
-          
-    
-
-
+          USER_NAME: ${{ secrets.USER_NAME }}
+          TARGET_DIR: ${{ secrets.TARGET_DIR }}
+         
